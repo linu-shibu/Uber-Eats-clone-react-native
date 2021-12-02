@@ -10,7 +10,7 @@ export const localRest = [
     categories: ["Thai", "Grill"],
     price: "$$",
     reviews: 1150,
-    rating: 4.4,
+    rating: 4.2,
   },
   {
     name: "Beachside Bar",
