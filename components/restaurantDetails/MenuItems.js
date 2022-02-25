@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Divider } from "react-native-elements";
 
 const foods = [
@@ -18,14 +19,14 @@ const foods = [
       "https://upload.wikimedia.org/wikipedia/commons/3/3d/Portada-chilaquiles-rojos.jpg",
   },
   {
-    title: "Tandoori Chicken",
+    title: "Tandoori Dry Chicken",
     description: "Amazing chicken dish with tender chicken",
     price: "$19.20",
     image:
       "https://www.cubesnjuliennes.com/wp-content/uploads/2019/11/Tandoori-Chicken-1.jpg",
   },
   {
-    title: "Chilaquiles",
+    title: "Chilaquiles Special",
     description: "Chilaquiles with cheese and sauce. A delicious mexican dish.",
     price: "$14.50",
     image:
@@ -36,24 +37,22 @@ const foods = [
 export default function MenuItem() {
   return (
     <View>
-      <ScrollView>
-        <View style={styles.viewMenuItem}>
-          <FoodInfo food={foods[0]} />
-          <FoodImage food={foods[0]} />
+      {foods.map((food, index) => (
+        <View key={index}>
+          <View style={styles.viewMenuItem}>
+            <BouncyCheckbox
+              iconStyle={{
+                borderColor: "lightgray",
+                borderRadius: 0,
+              }}
+              fillColor={"green"}
+            />
+            <FoodInfo food={food} />
+            <FoodImage food={food} />
+          </View>
+          <Divider width={2} />
         </View>
-        <View style={styles.viewMenuItem}>
-          <FoodInfo food={foods[0]} />
-          <FoodImage food={foods[0]} />
-        </View>
-        <View style={styles.viewMenuItem}>
-          <FoodInfo food={foods[0]} />
-          <FoodImage food={foods[0]} />
-        </View>
-        <View style={styles.viewMenuItem}>
-          <FoodInfo food={foods[0]} />
-          <FoodImage food={foods[0]} />
-        </View>
-      </ScrollView>
+      ))}
     </View>
   );
 }
@@ -99,12 +98,14 @@ const styles = StyleSheet.create({
   },
 });
 
-// {foods.map((food, index) => (
-//   <View key={index}>
-//     <View style={styles.viewMenuItem}>
-//       <FoodInfo food={food} />
-//       <FoodImage food={food} />
-//     </View>
-//     <Divider width={2} />
-//   </View>
-// ))}
+{
+  /* {foods.map((food, index) => (
+  <View key={index}>
+    <View style={styles.viewMenuItem}>
+      <FoodInfo food={food} />
+      <FoodImage food={food} />
+    </View>
+    <Divider width={2} />
+  </View>
+))} */
+}

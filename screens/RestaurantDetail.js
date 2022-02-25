@@ -2,15 +2,19 @@ import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import { Divider } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
-import About from "../components/restaurantDetails/About";
-import MenuItems from "../components/restaurantDetails/MenuItems";
+import About from "../components/RestaurantDetails/About";
+import MenuItems from "../components/RestaurantDetails/MenuItems";
+import ViewCart from "../components/RestaurantDetails/ViewCart";
 
-export default function RestaurantDetail() {
+export default function RestaurantDetail({ route, navigation }) {
   return (
-    <View>
-      <About />
+    <View style={{ flex: 1 }}>
+      <About route={route} />
       <Divider width={1.8} />
-      <MenuItems />
+      <ScrollView>
+        <MenuItems />
+      </ScrollView>
+      <ViewCart navigation={navigation} restaurantName={route.params.name} />
     </View>
   );
 }
