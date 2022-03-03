@@ -47,6 +47,12 @@ export default function MenuItem({ restaurantName }) {
       },
     });
 
+  const cartItems = useSelector(
+    (state) => state.cartReducer.selectedItems.items
+  );
+
+  const isFoodInCart = (food, cartItems) =>
+    Boolean(cartItems.find((item) => item.title === food.title));
   return (
     <View>
       {foods.map((food, index) => (
@@ -59,6 +65,7 @@ export default function MenuItem({ restaurantName }) {
               }}
               fillColor={"green"}
               onPress={(checkboxValue) => selectItem(food, checkboxValue)}
+              isChecked={isFoodInCart(food, cartItems)}
             />
             <FoodInfo food={food} />
             <FoodImage food={food} />
