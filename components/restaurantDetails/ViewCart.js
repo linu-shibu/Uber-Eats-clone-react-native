@@ -7,7 +7,7 @@ const ViewCart = () => {
     <View style={styles.view}>
       <View style={styles.viewBtn}>
         <TouchableOpacity style={styles.btn}>
-          <Text style={styles.text}>ViewCart</Text>
+          <Text style={styles.text}>View Cart</Text>
         </TouchableOpacity>
       </View>
     </View>
