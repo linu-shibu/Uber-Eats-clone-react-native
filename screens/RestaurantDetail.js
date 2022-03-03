@@ -2,9 +2,9 @@ import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import { Divider } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
-import About from "../components/RestaurantDetails/About";
-import MenuItems from "../components/RestaurantDetails/MenuItems";
-import ViewCart from "../components/RestaurantDetails/ViewCart";
+import About from "../components/restaurantDetails/About";
+import MenuItems from "../components/restaurantDetails/MenuItems";
+import ViewCart from "../components/restaurantDetails/ViewCart";
 
 export default function RestaurantDetail({ route, navigation }) {
   return (
