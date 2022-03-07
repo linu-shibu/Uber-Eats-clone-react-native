@@ -3,8 +3,8 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { set } from "react-native-reanimated";
 import OrderItem from "./OrderItem";
+import firebase from "../../firebase";
 
 const ViewCart = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -20,6 +20,16 @@ const ViewCart = () => {
     style: "currency",
     currency: "USD",
   });
+
+  const addOrderToFireBase = () => {
+    const db = firebase.firestore();
+    db.collection("orders").add({
+      items: items,
+      restaurantName: restaurantName,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    setModalVisible(false);
+  };
 
   const checkoutModalContent = () => {
     return (
@@ -37,7 +47,9 @@ const ViewCart = () => {
             <View style={styles.checkoutView}>
               <TouchableOpacity
                 style={styles.checkoutTouchable}
-                onPress={() => setModalVisible(false)}
+                onPress={() => {
+                  addOrderToFireBase();
+                }}
               >
                 <Text style={styles.checkoutText}>Checkout</Text>
                 <Text style={styles.checkoutTotal}>
