@@ -6,7 +6,7 @@ import { useState } from "react";
 import OrderItem from "./OrderItem";
 import firebase from "../../firebase";
 
-const ViewCart = () => {
+const ViewCart = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const { items, restaurantName } = useSelector(
@@ -29,6 +29,7 @@ const ViewCart = () => {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
     setModalVisible(false);
+    navigation.navigate("OrderCompleted");
   };
 
   const checkoutModalContent = () => {
