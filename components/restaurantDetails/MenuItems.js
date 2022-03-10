@@ -4,38 +4,12 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Divider } from "react-native-elements";
 import { useDispatch, useSelector } from "react-redux";
 
-const foods = [
-  {
-    title: "Tandoori Chicken",
-    description: "Amazing chicken dish with tender chicken",
-    price: "$19.20",
-    image:
-      "https://www.cubesnjuliennes.com/wp-content/uploads/2019/11/Tandoori-Chicken-1.jpg",
-  },
-  {
-    title: "Chilaquiles",
-    description: "Chilaquiles with cheese and sauce. A delicious mexican dish.",
-    price: "$14.50",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/3/3d/Portada-chilaquiles-rojos.jpg",
-  },
-  {
-    title: "Tandoori Dry Chicken",
-    description: "Amazing chicken dish with tender chicken",
-    price: "$19.20",
-    image:
-      "https://www.cubesnjuliennes.com/wp-content/uploads/2019/11/Tandoori-Chicken-1.jpg",
-  },
-  {
-    title: "Chilaquiles Special",
-    description: "Chilaquiles with cheese and sauce. A delicious mexican dish.",
-    price: "$14.50",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/3/3d/Portada-chilaquiles-rojos.jpg",
-  },
-];
-
-export default function MenuItem({ restaurantName }) {
+export default function MenuItem({
+  restaurantName,
+  foods,
+  hideCheckbox,
+  marginLeft,
+}) {
   const dispatch = useDispatch();
   const selectItem = (item, checkboxValue) =>
     dispatch({
@@ -58,17 +32,21 @@ export default function MenuItem({ restaurantName }) {
       {foods.map((food, index) => (
         <View key={index}>
           <View style={styles.viewMenuItem}>
-            <BouncyCheckbox
-              iconStyle={{
-                borderColor: "lightgray",
-                borderRadius: 0,
-              }}
-              fillColor={"green"}
-              onPress={(checkboxValue) => selectItem(food, checkboxValue)}
-              isChecked={isFoodInCart(food, cartItems)}
-            />
+            {hideCheckbox ? (
+              <></>
+            ) : (
+              <BouncyCheckbox
+                iconStyle={{
+                  borderColor: "lightgray",
+                  borderRadius: 0,
+                }}
+                fillColor={"green"}
+                onPress={(checkboxValue) => selectItem(food, checkboxValue)}
+                isChecked={isFoodInCart(food, cartItems)}
+              />
+            )}
             <FoodInfo food={food} />
-            <FoodImage food={food} />
+            <FoodImage food={food} marginLeft={marginLeft ? marginLeft : 0} />
           </View>
           <Divider width={2} />
         </View>
@@ -85,18 +63,18 @@ const FoodInfo = (props) => (
   </View>
 );
 
-const FoodImage = (props) => (
+const FoodImage = ({ marginLeft, ...props }) => (
   <Image
     source={{
       uri: props.food.image,
     }}
-    style={styles.foodImageStyle}
+    style={{ width: 135, height: 100, borderRadius: 8, marginLeft: marginLeft }}
   />
 );
 
 const styles = StyleSheet.create({
   infoStyle: {
-    width: 240,
+    width: 220,
     justifyContent: "space-evenly",
   },
   titleStyle: {
@@ -111,11 +89,12 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 8,
   },
-  foodImageStyle: {
-    width: 150,
-    height: 100,
-    borderRadius: 8,
-  },
+  // foodImageStyle: {
+  //   width: 135,
+  //   height: 100,
+  //   borderRadius: 8,
+  //   marginLeft: marginLeft,
+  // },
 });
 
 {
