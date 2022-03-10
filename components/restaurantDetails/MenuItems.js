@@ -89,12 +89,6 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 8,
   },
-  // foodImageStyle: {
-  //   width: 135,
-  //   height: 100,
-  //   borderRadius: 8,
-  //   marginLeft: marginLeft,
-  // },
 });
 
 {
