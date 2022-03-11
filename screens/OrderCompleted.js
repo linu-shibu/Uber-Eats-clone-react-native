@@ -59,7 +59,11 @@ const OrderCompleted = () => {
           Your Order at {restaurantName} has been placed for ${totalUSD}
         </Text>
         <ScrollView>
-          <MenuItems foods={lastOrder.items} hideCheckbox={true} />
+          <MenuItems
+            foods={lastOrder.items}
+            hideCheckbox={true}
+            marginLeft={12}
+          />
         </ScrollView>
         <LottieView
           style={styles.lottieKitch}

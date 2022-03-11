@@ -5,9 +5,11 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import OrderItem from "./OrderItem";
 import firebase from "../../firebase";
+import LottieView from "lottie-react-native";
 
 const ViewCart = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { items, restaurantName } = useSelector(
     (state) => state.cartReducer.selectedItems
@@ -22,14 +24,21 @@ const ViewCart = ({ navigation }) => {
   });
 
   const addOrderToFireBase = () => {
-    const db = firebase.firestore();
-    db.collection("orders").add({
-      items: items,
-      restaurantName: restaurantName,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+    setLoading(true);
     setModalVisible(false);
-    navigation.navigate("OrderCompleted");
+    const db = firebase.firestore();
+    db.collection("orders")
+      .add({
+        items: items,
+        restaurantName: restaurantName,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      .then(() => {
+        setTimeout(() => {
+          setLoading(false);
+          navigation.navigate("OrderCompleted");
+        }, 2500);
+      });
   };
 
   const checkoutModalContent = () => {
@@ -86,6 +95,20 @@ const ViewCart = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
+      ) : (
+        <></>
+      )}
+      {loading ? (
+        <>
+          <View style={styles.loadingView}>
+            <LottieView
+              style={{ height: 200, alignSelf: "center" }}
+              source={require("../../assets/animations/scanner.json")}
+              autoPlay
+              speed={3}
+            />
+          </View>
+        </>
       ) : (
         <></>
       )}
@@ -188,6 +211,16 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 15,
     top: 15,
+  },
+  loadingView: {
+    backgroundColor: "black",
+    position: "absolute",
+    opacity: 0.6,
+    justifyContent: "center",
+    alignSelf: "center",
+    width: "100%",
+    height: "100%",
+    flex: 1,
   },
 });
 
